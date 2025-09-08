@@ -7,399 +7,307 @@
   <meta name="description" content="Premium handmade custom gifts. Order via WhatsApp. 80% advance for custom items." />
   <style>
     :root{
-      --page-bg: #ffffff;      /* white page background */
-      --text: #0b0b0b;         /* main text (black) */
-      --muted:#6b6b6b;         /* muted gray */
-      --btn-bg:#0b0b0b;        /* black buttons */
-      --btn-color:#ffffff;     /* button text white */
-      --accent-pink:#ff4d6d;   /* romantic pink for highlights/bubbles */
-      --card:#fff;             /* card background (white, with shadow) */
-      --glass: rgba(255,77,109,0.06);
+      --bg:#ffffff;
+      --card:#f9f9f9;
+      --muted:#444;
+      --accent:#000000;
+      --highlight:#ff4d6d;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      margin:0;
-      background:var(--page-bg);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      position:relative;
-      overflow-x:hidden;
-    }
-
-    /* Pink bubble background (behind content) */
-    .bubble-wrap{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-      overflow:hidden;
-    }
-    .bubble{
-      position:absolute;
-      border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,77,109,0.18), rgba(255,77,109,0.08) 50%, transparent 60%);
-      opacity:0.9;
-      filter: blur(18px);
-      animation: floatUp linear infinite;
-    }
-    /* different sizes & speeds */
-    .b1{width:260px;height:260px;left:-40px;bottom:-60px;animation-duration:22s}
-    .b2{width:160px;height:160px;left:70%;bottom:-40px;animation-duration:18s;opacity:0.8}
-    .b3{width:110px;height:110px;left:30%;bottom:-20px;animation-duration:14s;opacity:0.7}
-    .b4{width:200px;height:200px;left:85%;bottom:10px;animation-duration:26s;opacity:0.6}
-    .b5{width:90px;height:90px;left:55%;bottom:-80px;animation-duration:20s;opacity:0.65}
-
-    @keyframes floatUp{
-      0%{transform: translateY(10vh) scale(1); opacity:0.8}
-      50%{opacity:0.6}
-      100%{transform: translateY(-120vh) scale(1.05); opacity:0.0}
-    }
-
-    /* Page container on top of bubbles */
-    .page {position:relative;z-index:2;min-height:100vh}
-
-    /* Header */
-    header{position:sticky;top:0;background:rgba(255,255,255,0.9);backdrop-filter: blur(6px);border-bottom:1px solid rgba(11,11,11,0.04);z-index:30}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--muted);overflow-x:hidden;}
+    header{position:sticky;top:0;background:rgba(255,255,255,0.8);backdrop-filter: blur(8px);border-bottom:1px solid rgba(0,0,0,0.08);z-index:30}
     .container{max-width:1100px;margin:0 auto;padding:20px}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .logo{display:flex;align-items:center;gap:12px;font-weight:700}
-    .mark{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent-pink),#ff9aa8);color:#fff;font-weight:800}
-    nav a{color:var(--text);text-decoration:none;margin-left:18px;font-weight:600;transition:color .15s}
-    nav a:hover{color:var(--accent-pink)}
-    .btn{background:var(--btn-bg);color:var(--btn-color);padding:10px 18px;border-radius:28px;font-weight:700;border:none;text-decoration:none;cursor:pointer;box-shadow:0 6px 18px rgba(11,11,11,0.08)}
-    .btn.alt{background:transparent;border:1px solid rgba(11,11,11,0.06);color:var(--text)}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:0.3px;color:var(--accent)}
+    .logo .mark{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--highlight),#ff99aa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+    nav a{color:var(--accent);text-decoration:none;margin-left:18px;transition:0.3s}
+    nav a:hover{color:var(--highlight)}
+    .cta{background:var(--accent);color:#fff;padding:10px 18px;border-radius:30px;font-weight:600;text-decoration:none;transition:0.3s}
+    .cta:hover{background:#333}
 
     /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;align-items:center;padding:46px 0}
-    .hero h1{font-size:34px;margin:0 0 10px;color:var(--text);line-height:1.05}
-    .hero h1 .heart{color:var(--accent-pink);margin-left:6px}
-    .hero p{color:var(--muted);margin:0 0 18px;font-size:15px;line-height:1.45}
-    .search{display:flex;gap:10px;margin-top:8px}
-    .search input{flex:1;padding:12px 14px;border-radius:30px;border:1px solid rgba(11,11,11,0.06);background:#fff;color:var(--text);outline:none;box-shadow:0 6px 18px rgba(11,11,11,0.03)}
-    .search button{border-radius:30px;padding:10px 14px;border:none;background:transparent;color:var(--accent-pink);cursor:pointer;font-weight:700}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center;padding:48px 0;position:relative;overflow:hidden}
+    .hero h1{font-size:36px;margin:0 0 12px;color:var(--accent);line-height:1.1;}
+    .hero h1 span{color:var(--highlight)}
+    .hero p{color:var(--muted);margin:0 0 18px;font-size:15px}
+    .search{display:flex;gap:8px}
+    .search input{flex:1;padding:12px;border-radius:25px;border:1px solid rgba(0,0,0,0.1);background:#fff;color:inherit}
 
-    .grid-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-    .cat{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(11,11,11,0.04);display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .14s;box-shadow:0 6px 20px rgba(11,11,11,0.03)}
-    .cat:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(255,77,109,0.06)}
-    .cat img{width:64px;height:64px;border-radius:10px;object-fit:cover}
-    .cat h4{margin:0;font-size:15px;color:var(--text)}
-    .cat p{margin:0;color:var(--muted);font-size:13px}
+    /* pink bubble animation */
+    .bubble{position:absolute;bottom:-100px;width:40px;height:40px;background:var(--highlight);border-radius:50%;opacity:0.6;animation: rise 12s infinite ease-in;}
+    @keyframes rise{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-1200px) scale(1.5);opacity:0}}
 
-    /* Products */
+    /* product cards */
     .section{padding:40px 0}
-    .section h2{margin:0 0 18px;color:var(--text)}
-    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(11,11,11,0.04);display:flex;flex-direction:column;gap:10px;transition:transform .14s, box-shadow .14s;box-shadow:0 6px 20px rgba(11,11,11,0.03)}
-    .card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(11,11,11,0.06)}
-    .card img{width:100%;height:220px;border-radius:10px;object-fit:cover}
-    .meta{display:flex;justify-content:space-between;align-items:center}
-    .price{font-weight:700;color:var(--text)}
-    .actions{display:flex;gap:10px;align-items:center}
-    .order-btn{display:inline-block;padding:10px 16px;border-radius:28px;text-decoration:none;background:var(--btn-bg);color:var(--btn-color);font-weight:700;cursor:pointer}
-    .order-btn.alt{background:transparent;border:1px solid rgba(11,11,11,0.06);color:var(--text)}
+    .section h2{margin:0 0 18px;color:var(--accent)}
+    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:14px;border-radius:18px;border:1px solid rgba(0,0,0,0.08);display:flex;flex-direction:column;gap:10px;transition:0.3s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 4px 14px rgba(255,77,109,0.25)}
+    .card img{width:100%;height:220px;border-radius:12px;object-fit:cover}
+    .price{font-weight:700;color:var(--highlight)}
 
-    /* About / Contact */
-    .about{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(11,11,11,0.04)}
+    .order-btn.small {
+      padding:6px 12px;
+      font-size:13px;
+      border-radius:20px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:600;
+      text-decoration:none;
+      transition:0.3s;
+    }
+    .order-btn.small:hover{background:#333}
+
+    .details-btn {
+      padding:6px 12px;
+      border-radius:20px;
+      border:1px solid rgba(0,0,0,0.1);
+      background:var(--card);
+      cursor:pointer;
+      font-size:13px;
+      transition:0.3s;
+    }
+    .details-btn:hover {
+      background:var(--highlight);
+      color:#fff;
+    }
+
     footer{padding:30px 0;text-align:center;color:var(--muted)}
 
     /* Modal */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.28);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}
-    .modal{width:920px;max-width:100%;background:#fff;padding:18px;border-radius:12px;border:1px solid rgba(11,11,11,0.06);box-shadow:0 30px 60px rgba(11,11,11,0.12)}
-    .modal-grid{display:flex;gap:14px}
-    .modal-grid img{width:320px;height:320px;object-fit:cover;border-radius:10px}
-    .opts{flex:1}
-    .sizes{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .size{padding:8px 12px;border-radius:999px;border:1px solid rgba(11,11,11,0.06);cursor:pointer;background:transparent;color:var(--text)}
-    .size.active{background:var(--accent-pink);color:#fff;border-color:var(--accent-pink)}
-    .qty{display:flex;align-items:center;gap:8px;margin-top:12px}
-    .qty button{padding:8px 12px;border-radius:999px;border:none;background:rgba(11,11,11,0.06);color:var(--text);cursor:pointer}
-
-    /* Responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .products{grid-template-columns:repeat(2,1fr)}
-      .grid-cats{grid-template-columns:repeat(2,1fr)}
-      .modal-grid{flex-direction:column}
-      .modal-grid img{width:100%;height:320px}
+    .modal {
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.6);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:999;
     }
+    .modal-content {
+      background:#fff;
+      border-radius:16px;
+      max-width:600px;
+      width:90%;
+      padding:20px;
+      position:relative;
+      animation:pop 0.3s ease;
+    }
+    @keyframes pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+    .modal-content iframe {
+      width:100%;
+      height:300px;
+      border-radius:12px;
+      margin-bottom:16px;
+    }
+    .modal-content h3 {margin-bottom:8px;color:var(--accent)}
+    .modal-content p {margin:4px 0;font-size:14px;color:var(--muted)}
+    .close-btn {
+      position:absolute;
+      top:10px;right:14px;
+      background:none;
+      border:none;
+      font-size:22px;
+      cursor:pointer;
+      color:#333;
+    }
+
+    /* contact form */
+    #contactForm {display:flex;flex-direction:column;gap:12px;max-width:400px;margin:0 auto}
+    #contactForm input, #contactForm textarea {
+      padding:10px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;font-family:inherit;font-size:14px
+    }
+    #contactForm button {
+      padding:10px;border:none;border-radius:25px;background:var(--highlight);color:#fff;font-weight:600;cursor:pointer;transition:0.3s
+    }
+    #contactForm button:hover{background:#e23a5a}
+
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}.products{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:520px){
       .products{grid-template-columns:1fr}
-      .grid-cats{grid-template-columns:1fr}
-      nav a{display:none}
+      .hero h1{font-size:24px}
+      .hero h1 span{display:block;margin-top:4px}
     }
   </style>
 </head>
 <body>
-  <!-- Animated pink bubbles behind content -->
-  <div class="bubble-wrap" aria-hidden="true">
-    <div class="bubble b1"></div>
-    <div class="bubble b2"></div>
-    <div class="bubble b3"></div>
-    <div class="bubble b4"></div>
-    <div class="bubble b5"></div>
-  </div>
+  <header>
+    <div class="container nav">
+      <div class="logo"><div class="mark">G</div> Gifts</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#contact" id="whats-btn">WhatsApp</a>
+      </nav>
+      <a href="#contact" class="cta">Order Now</a>
+    </div>
+  </header>
 
-  <div class="page">
-    <header>
-      <div class="container nav">
-        <div class="logo">
-          <div class="mark">G</div>
-          <div style="line-height:1">
-            <div style="font-size:15px">GiftWorks</div>
-            <div style="font-size:12px;color:var(--muted)">Premium Handmade Gifts</div>
-          </div>
-        </div>
-
-        <nav>
-          <a href="#home">Home</a>
-          <a href="#products">Products</a>
-          <a href="#contact">Contact</a>
-          <a class="btn" id="whats-btn" href="#">Order on WhatsApp</a>
-        </nav>
+  <section class="hero" id="home">
+    <div>
+      <h1>Premium Handmade Custom Gifts <span>— Made Just for You ❤️</span></h1>
+      <p>Specially crafted with love and full privacy. Since these are custom made with your photos, we require 80% advance payment.</p>
+      <div class="search">
+        <input type="text" placeholder="Search gifts..." />
       </div>
-    </header>
+      <button id="browseBtn" class="cta" style="margin-top:16px">Browse Products</button>
+    </div>
+    <div>
+      <img src="https://source.unsplash.com/420x420/?gift,romantic" alt="Gifts" style="border-radius:20px;">
+    </div>
+    <!-- pink bubbles -->
+    <div class="bubble" style="left:10%;animation-delay:0s;width:30px;height:30px"></div>
+    <div class="bubble" style="left:40%;animation-delay:3s;width:50px;height:50px"></div>
+    <div class="bubble" style="left:70%;animation-delay:6s;width:20px;height:20px"></div>
+    <div class="bubble" style="left:85%;animation-delay:9s;width:40px;height:40px"></div>
+  </section>
 
-    <main class="container">
-      <section id="home" class="hero">
-        <div>
-          <h1>Premium Handmade Custom Gifts — Made Just for You <span class="heart">❤️</span></h1>
-          <p>Personalized, private, and crafted with love. Perfect for birthdays, anniversaries, and special moments. Order via WhatsApp for quick customization and full privacy.</p>
+  <section class="section" id="products">
+    <div class="container">
+      <h2>Our Products</h2>
+      <div class="products" id="productGrid"></div>
+    </div>
+  </section>
 
-          <div class="search">
-            <input id="search" placeholder='Search designs, e.g. "romantic t-shirt"' />
-            <button id="browseBtn" class="btn alt">Browse</button>
-          </div>
+  <section class="section" id="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" />
+        <textarea id="message" rows="4" placeholder="Your Message"></textarea>
+        <button type="submit">Send via WhatsApp</button>
+      </form>
+    </div>
+  </section>
 
-          <div class="grid-cats" id="categories" style="margin-top:18px;">
-            <!-- categories injected by JS -->
-          </div>
-        </div>
+  <footer>
+    <p>© 2025 Premium Handmade Gifts. All rights reserved.</p>
+  </footer>
 
-        <div>
-          <div class="about" style="border-radius:12px">
-            <h3 style="margin:0 0 8px;color:var(--text)">Why choose us?</h3>
-            <p style="margin:0;color:var(--muted)">Handmade premium quality • Full privacy • <strong>80% advance</strong> for custom work • Fast replies on WhatsApp</p>
-            <div style="margin-top:14px">
-              <a class="btn" href="#products">Explore Designs</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="products" class="section">
-        <h2>Products</h2>
-        <div class="products" id="productGrid">
-          <!-- product cards injected by JS -->
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="about">
-          <h3>About our custom work</h3>
-          <p style="color:var(--muted);margin:8px 0 0">We make premium quality handmade items, tailored only for you. Each custom product is private and unique; because of this we require an <strong>80% advance payment</strong> before production starts. This ensures your design is made exclusively and can't be resold.</p>
-        </div>
-      </section>
-
-      <section id="contact" class="section">
-        <h2>Contact</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div class="about">
-            <h4 style="margin:0 0 6px">Order via WhatsApp</h4>
-            <p style="color:var(--muted);margin:0 0 8px">Click the WhatsApp button to start an order. We'll ask for your photos / text and confirm the final price and payment link.</p>
-            <p style="margin-top:8px">Instagram: <a href="#" id="instaLink" style="color:var(--accent-pink);text-decoration:none">@yourhandle</a></p>
-          </div>
-
-          <div class="about">
-            <h4 style="margin:0 0 6px">Quick message</h4>
-            <form id="contactForm">
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <input id="name" placeholder="Name" style="padding:10px;border-radius:8px;border:1px solid rgba(11,11,11,0.04);background:#fff;color:var(--text)"/>
-                <input id="email" placeholder="Email (optional)" style="padding:10px;border-radius:8px;border:1px solid rgba(11,11,11,0.04);background:#fff;color:var(--text)"/>
-                <textarea id="message" placeholder="Message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(11,11,11,0.04);background:#fff;color:var(--text)"></textarea>
-                <button type="submit" class="btn">Send via WhatsApp</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <p>© <span id="year"></span> GiftWorks • Handmade & custom • Privacy-first</p>
-      </footer>
-    </main>
-  </div>
-
-  <!-- Modal (keeps same structure; will appear above everything) -->
-  <div class="modal-backdrop" id="modal">
-    <div class="modal" role="dialog" aria-modal="true">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3 id="modalTitle">Product</h3>
-        <button id="closeModal" style="background:none;border:none;color:var(--muted);cursor:pointer">Close ✕</button>
-      </div>
-      <div class="modal-grid">
-        <img id="modalImg" src="" alt="product image" />
-        <div class="opts">
-          <p id="modalDesc" style="color:var(--muted);margin:0"></p>
-
-          <div style="margin-top:12px">
-            <div style="font-size:13px;color:var(--muted)">Choose size</div>
-            <div class="sizes" id="sizeList"></div>
-          </div>
-
-          <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between">
-            <div class="price" id="modalPrice" style="color:var(--text);font-weight:700">₹299</div>
-            <div class="qty">
-              <button id="dec">-</button>
-              <div id="qtyVal">1</div>
-              <button id="inc">+</button>
-            </div>
-          </div>
-
-          <div style="margin-top:14px;display:flex;gap:10px">
-            <a id="whatsappOrder" class="order-btn" href="#">Order via WhatsApp</a>
-            <button id="previewBtn" class="order-btn alt" style="border-radius:28px">Preview</button>
-          </div>
-
-          <p style="margin-top:10px;color:var(--muted);font-size:13px">Note: Custom items require <strong>80% advance</strong>. We respect your privacy — your personal images will be used only for this order.</p>
-        </div>
-      </div>
+  <!-- Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <div id="modalBody"></div>
     </div>
   </div>
 
   <script>
-    // TODO: Replace this with your WhatsApp number in international format without plus. Example: 919812345678
-    const WHATSAPP_NUMBER = 'YOUR_NUMBER_HERE';
-    const INSTAGRAM = 'https://instagram.com/yourhandle';
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('instaLink').href = INSTAGRAM;
+    const WHATSAPP_NUMBER = 'YOUR_NUMBER_HERE'; // e.g. 919812345678
 
     const categories = [
-      {id:'tshirt', title:'Customize T-Shirt', img:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=60'},
-      {id:'shadowbox', title:'Shadowbox', img:'https://images.unsplash.com/photo-1525975908510-3d9e3c59a2a1?auto=format&fit=crop&w=800&q=60'},
-      {id:'diary', title:'Mini Diary', img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=60'},
-      {id:'frame', title:'Photo Frame', img:'https://images.unsplash.com/photo-1526318472351-c75fcf070e85?auto=format&fit=crop&w=800&q=60'},
-      {id:'mug', title:'Custom Mug', img:'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=800&q=60'}
+      {id:'frame', title:'Photo Frame'},
+      {id:'diary', title:'Mini Diary'},
+      {id:'mug', title:'Custom Mug'},
+      {id:'shadowbox', title:'Shadowbox'}
     ];
 
     const products = [
-      {id:1,cat:'tshirt',title:'Romantic Couple Tee',img:'https://images.unsplash.com/photo-1600180758890-15a0a7b3e8b2?auto=format&fit=crop&w=800&q=60',desc:'Soft cotton, premium print. Perfect for anniversaries.',sizes:['S','M','L','XL'],price:499},
-      {id:2,cat:'tshirt',title:'Birthday Photo Tee',img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=60',desc:'Upload your photo on front, durable print.',sizes:['S','M','L','XL'],price:699},
-      {id:3,cat:'mug',title:'Photo Wrap Mug',img:'https://images.unsplash.com/photo-1510626176961-4b57a6a1c7a8?auto=format&fit=crop&w=800&q=60',desc:'Ceramic mug with full photo wrap.',sizes:['300ml'],price:399},
-      {id:4,cat:'frame',title:'Rustic Photo Frame',img:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=60',desc:'Handmade wooden frame with glass.',sizes:['4x6','5x7','8x10'],price:799},
-      {id:5,cat:'diary',title:'Leather Mini Diary',img:'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=60',desc:'Handbound mini diary for memories.',sizes:['A6'],price:999},
-      {id:6,cat:'shadowbox',title:'Memory Shadowbox',img:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=60',desc:'Depth frame for keepsakes and photos.',sizes:['Small','Medium','Large'],price:2499}
+      {
+        id:1,cat:'frame',
+        title:'Custom Photo Frame',
+        img:'https://source.unsplash.com/300x220/?frame,photo',
+        price:799,
+        material:'Wood + Glass',
+        fabric:'N/A',
+        size:'12x18 inch',
+        video:'https://player.vimeo.com/video/123456789'
+      },
+      {
+        id:2,cat:'diary',
+        title:'Mini Handmade Diary',
+        img:'https://source.unsplash.com/300x220/?diary,handmade',
+        price:299,
+        material:'Handmade Paper',
+        fabric:'Leather Cover',
+        size:'A6',
+        video:'https://player.vimeo.com/video/123456789'
+      },
+      {
+        id:3,cat:'mug',
+        title:'Custom Mug',
+        img:'https://source.unsplash.com/300x220/?mug,custom',
+        price:399,
+        material:'Ceramic',
+        fabric:'Gloss Finish',
+        size:'300ml',
+        video:'https://player.vimeo.com/video/123456789'
+      },
+      {
+        id:4,cat:'shadowbox',
+        title:'Memory Shadowbox',
+        img:'https://source.unsplash.com/300x220/?shadowbox',
+        price:2499,
+        material:'Wood + Acrylic',
+        fabric:'Velvet Backdrop',
+        size:'18x24 inch',
+        video:'https://player.vimeo.com/video/123456789'
+      }
     ];
 
-    // render categories
-    const categoriesEl = document.getElementById('categories');
-    categories.forEach(c=>{
-      const el = document.createElement('div'); el.className='cat';
-      el.innerHTML = `
-        <img src="${c.img}" alt="${c.title}" />
-        <div>
-          <h4>${c.title}</h4>
-          <p style="color:var(--muted);font-size:13px;margin:4px 0 0">Explore ${c.title} designs</p>
-        </div>`;
-      el.addEventListener('click',()=>{ filterByCategory(c.id); window.location.hash='#products' });
-      categoriesEl.appendChild(el);
-    });
-
-    // render products
     const productGrid = document.getElementById('productGrid');
-    function renderProducts(list){
-      productGrid.innerHTML='';
+
+    function renderProducts(filter=''){
+      productGrid.innerHTML = '';
+      const list = filter ? products.filter(p=>p.cat===filter) : products;
       list.forEach(p=>{
-        const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `
-          <img src="${p.img}" alt="${p.title}" />
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div style="font-weight:700">${p.title}</div>
-              <div style="color:var(--muted);font-size:13px">${p.desc}</div>
-            </div>
-            <div class="price">₹${p.price}</div>
+        const div = document.createElement('div');
+        div.className='card';
+        div.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <p class="price">₹${p.price}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I want to order a ${p.title}" class="order-btn small">Buy Now</a>
+            <button class="details-btn" onclick="showDetails(${p.id})">Details</button>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-            <a class="order-btn" href="#" data-id="${p.id}">Order via WhatsApp</a>
-            <button class="order-btn alt" style="background:transparent;border:1px solid rgba(11,11,11,0.04);color:var(--text)" data-id="${p.id}">Details</button>
-          </div>`;
-        productGrid.appendChild(card);
+        `;
+        productGrid.appendChild(div);
       });
-
-      // attach events
-      document.querySelectorAll('.order-btn[data-id]').forEach(btn=>{
-        btn.addEventListener('click',(e)=>{
-          const id = Number(e.currentTarget.getAttribute('data-id'));
-          const isDetails = e.currentTarget.textContent.trim().toLowerCase() === 'details';
-          if(isDetails){ openModal(id); } else { quickWhats(id); }
-          e.preventDefault();
-        });
-      });
+      document.getElementById('products').scrollIntoView({behavior:'smooth',block:'start'});
     }
 
-    function filterByCategory(cat){
-      const list = products.filter(p=>p.cat===cat);
-      renderProducts(list);
+    // Modal handling
+    function showDetails(id){
+      const p = products.find(x=>x.id===id);
+      const modalBody = document.getElementById('modalBody');
+      modalBody.innerHTML = `
+        <iframe src="${p.video}?autoplay=1&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <h3>${p.title}</h3>
+        <p><b>Price:</b> ₹${p.price}</p>
+        <p><b>Material:</b> ${p.material}</p>
+        <p><b>Fabric:</b> ${p.fabric}</p>
+        <p><b>Size:</b> ${p.size}</p>
+      `;
+      document.getElementById('productModal').style.display='flex';
     }
+    function closeModal(){
+      document.getElementById('productModal').style.display='none';
+      document.getElementById('modalBody').innerHTML='';
+    }
+
+    // Create categories above products
+    const container = document.querySelector('#products .container');
+    const catDiv = document.createElement('div');
+    catDiv.style.display='flex'; catDiv.style.gap='12px'; catDiv.style.flexWrap='wrap'; catDiv.style.marginBottom='16px';
+    categories.forEach(c=>{
+      const b = document.createElement('button');
+      b.textContent=c.title; 
+      b.style.padding='8px 12px'; 
+      b.style.borderRadius='25px'; 
+      b.style.border='1px solid rgba(0,0,0,0.08)';
+      b.style.background='var(--card)';
+      b.style.cursor='pointer';
+      b.onclick=()=>renderProducts(c.id);
+      catDiv.appendChild(b);
+    });
+    productGrid.parentNode.insertBefore(catDiv, productGrid);
 
     // initial render
-    renderProducts(products);
+    renderProducts();
 
-    // search
-    document.getElementById('search').addEventListener('input',(e)=>{
-      const q = e.target.value.toLowerCase();
-      const list = products.filter(p=>p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
-      renderProducts(list);
-    });
-
-    // modal logic
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalImg = document.getElementById('modalImg');
-    const modalDesc = document.getElementById('modalDesc');
-    const sizeList = document.getElementById('sizeList');
-    const modalPrice = document.getElementById('modalPrice');
-    const qtyVal = document.getElementById('qtyVal');
-    let currentProduct=null; let currentSize=null; let qty=1;
-
-    function openModal(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      currentProduct = p; currentSize = p.sizes[0]; qty=1; qtyVal.textContent=qty;
-      modalTitle.textContent = p.title;
-      modalImg.src = p.img;
-      modalDesc.textContent = p.desc;
-      modalPrice.textContent = '₹'+p.price;
-      sizeList.innerHTML='';
-      p.sizes.forEach(s=>{
-        const el = document.createElement('div'); el.className='size' + (s===currentSize? ' active':''); el.textContent = s;
-        el.addEventListener('click',()=>{ document.querySelectorAll('.size').forEach(x=>x.classList.remove('active')); el.classList.add('active'); currentSize=s; });
-        sizeList.appendChild(el);
-      });
-      modal.style.display='flex';
-    }
-    document.getElementById('closeModal').addEventListener('click',()=>{ modal.style.display='none' });
-    document.getElementById('inc').addEventListener('click',()=>{ qty++; qtyVal.textContent=qty });
-    document.getElementById('dec').addEventListener('click',()=>{ if(qty>1) qty--; qtyVal.textContent=qty });
-
-    function quickWhats(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      const msg = encodeURIComponent(`Hello, I want to order *${p.title}* (ID: ${p.id}).\nSize: ${p.sizes[0]}\nQuantity: 1\nCustomization: [please describe]\nI agree to pay 80% advance for this custom product.`);
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
-    }
-
-    document.getElementById('whatsappOrder').addEventListener('click',()=>{
-      if(!currentProduct) return;
-      const message = encodeURIComponent(`Hello, I want to order *${currentProduct.title}* (ID: ${currentProduct.id}).\nSize: ${currentSize}\nQuantity: ${qty}\nCustomization: [please describe]\nI agree to pay 80% advance for this custom product.`);
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,'_blank');
-    });
-
-    // contact form -> whatsapp
+    // contact form + buttons
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const name=document.getElementById('name').value||'Customer';
@@ -409,11 +317,15 @@
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,'_blank');
     });
 
-    // browse btn & header whatsapp
-    document.getElementById('browseBtn').addEventListener('click',()=>{ window.location.hash='#products'; });
-    document.getElementById('whats-btn').addEventListener('click',(e)=>{ e.preventDefault(); window.open(`https://wa.me/${WHATSAPP_NUMBER}`,'_blank') });
+    document.getElementById('browseBtn').addEventListener('click',()=>{ 
+      window.location.hash='#products'; 
+    });
 
-    // small helper: replace placeholder number warning
+    document.getElementById('whats-btn').addEventListener('click',(e)=>{ 
+      e.preventDefault(); 
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}`,'_blank') 
+    });
+
     if(WHATSAPP_NUMBER==='YOUR_NUMBER_HERE'){
       console.warn('Replace WHATSAPP_NUMBER in the HTML with your number in international format (e.g. 919812345678)');
     }
