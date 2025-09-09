@@ -21,11 +21,13 @@
     body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--muted);overflow-x:hidden;}
     header{position:sticky;top:0;background:rgba(255,255,255,0.8);backdrop-filter: blur(8px);border-bottom:1px solid rgba(0,0,0,0.08);z-index:30}
     .container{max-width:1100px;margin:0 auto;padding:20px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
     .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:0.3px;color:var(--accent)}
     .logo .mark{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--highlight),#ff99aa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
-    nav a{color:var(--accent);text-decoration:none;margin-left:18px;transition:0.3s}
-    nav a:hover{color:var(--highlight)}
+    nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end;}
+    nav a{color:var(--accent);text-decoration:none;padding:8px 12px;border-radius:20px;transition:0.3s;white-space:nowrap;}
+    nav a:hover{color:#fff;background:var(--highlight)}
+
     .cta{background:var(--accent);color:#fff;padding:10px 18px;border-radius:30px;font-weight:600;text-decoration:none;transition:0.3s}
     .cta:hover{background:#333}
 
@@ -106,6 +108,8 @@
       .hero h1{font-size:24px}
       .hero h1 span{display:block;margin-top:4px}
       .hero img{width:100%;max-width:300px;margin:0 auto;display:block;}
+      nav{justify-content:center;width:100%;}
+      .nav{flex-direction:column;align-items:flex-start;}
     }
   </style>
 </head>
@@ -116,7 +120,7 @@
       <nav>
         <a href="#home">Home</a>
         <a href="#products">Products</a>
-        <a href="#contact" id="whats-btn">WhatsApp</a>
+        <a href="#contact" id="whats-btn">Contact</a>
       </nav>
     </div>
   </header>
@@ -176,7 +180,7 @@
   <script>
     AOS.init({ duration: 1000, once: true });
 
-    const WHATSAPP_NUMBER = '9198482037255'; // ✅ change to your full intl number
+    const WHATSAPP_NUMBER = '8482037255'; // ✅ change to your full intl number
 
     const categories = [
       {id:'shirt', title:'T-shirt'},
@@ -206,7 +210,7 @@
           <h3>${p.title}</h3>
           <p class="price">₹${p.price}</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I want to order a ${p.title}" class="order-btn small">Buy Now</a>
+            <a href="https://wa.me/${8482037255}?text=I want to order a ${p.title}" class="order-btn small">Buy Now</a>
             <button class="details-btn" onclick="showDetails(${p.id})">Details</button>
           </div>
         `;
@@ -260,7 +264,7 @@
       const email=document.getElementById('email').value||'';
       const msg=document.getElementById('message').value||'';
       const message = encodeURIComponent(`Hi, I'm ${name}.\nEmail: ${email}\nMessage: ${msg}`);
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,'_blank');
+      window.open(`https://wa.me/${8482037255}?text=${message}`,'_blank');
     });
 
     document.getElementById('browseBtn').addEventListener('click',()=>{ 
@@ -269,7 +273,7 @@
 
     document.getElementById('whats-btn').addEventListener('click',(e)=>{ 
       e.preventDefault(); 
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}`,'_blank') 
+      window.open(`https://wa.me/${8482037255}`,'_blank') 
     });
   </script>
 </body>
