@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Handmade Gifts</title>
+  <title>Dipu's Custom World</title>
   <meta name="description" content="Premium handmade custom gifts. Order via WhatsApp. 80% advance for custom items.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
-      --primary: #E91E63; /* Changed from #D4AF37 (gold) to pink (#E91E63) */
-      --secondary: #C2185B; /* Changed from #8B4513 (brown) to darker pink (#C2185B) */
-      --accent: #C13584; /* Kept same pink accent */
+      --primary: #8A2BE2; /* Changed to purple */
+      --secondary: #6A0DAD; /* Darker purple */
+      --accent: #9370DB; /* Medium purple */
       --dark: #1a1a1a;
-      --light: #fce4ec; /* Changed to light pink background */
+      --light: #f3e8ff; /* Light purple background */
       --gray: #555;
       --white: #ffffff;
       --shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -77,6 +77,13 @@
       justify-content: center;
       color: var(--white);
       font-weight: 800;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     
     .menu-toggle {
@@ -108,11 +115,27 @@
       padding: 0.5rem 1rem;
       border-radius: 8px;
       transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+    
+    nav a:hover:before {
+      width: 100%;
     }
     
     nav a:hover {
-      background: var(--primary);
-      color: var(--white);
+      color: var(--primary);
     }
     
     .cta {
@@ -126,11 +149,29 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.5s;
+    }
+    
+    .cta:hover:before {
+      left: 100%;
     }
     
     .cta:hover {
       background: var(--secondary);
       transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
     }
     
     /* Hero Section */
@@ -138,12 +179,33 @@
       padding: 2rem 0;
       background: linear-gradient(to bottom, var(--light) 70%, var(--white) 100%);
       border-radius: 0 0 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-5%, -5%) rotate(180deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
     }
     
     .hero-content {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      position: relative;
+      z-index: 1;
     }
     
     .hero-text h1 {
@@ -156,6 +218,15 @@
     .hero-text h1 span {
       color: var(--primary);
       display: block;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textShine 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes textShine {
+      0% { filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5)); }
+      100% { filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.8)); }
     }
     
     .hero-text p {
@@ -175,6 +246,14 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+    
+    .feature:hover {
+      transform: translateX(10px);
+      background: rgba(138, 43, 226, 0.05);
     }
     
     .feature-icon {
@@ -188,6 +267,13 @@
       color: var(--primary);
       font-size: 1.2rem;
       box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .feature:hover .feature-icon {
+      transform: rotate(15deg) scale(1.1);
+      background: var(--primary);
+      color: var(--white);
     }
     
     .hero-image {
@@ -201,6 +287,13 @@
       max-width: 400px;
       border-radius: 1rem;
       box-shadow: var(--shadow);
+      animation: floatImage 5s ease-in-out infinite;
+    }
+    
+    @keyframes floatImage {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
     
     .hero-badge {
@@ -214,6 +307,12 @@
       font-weight: 600;
       font-size: 0.9rem;
       box-shadow: var(--shadow);
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
     
     /* Products Section */
@@ -238,6 +337,12 @@
       width: 60px;
       height: 3px;
       background: var(--primary);
+      animation: expand 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes expand {
+      0% { width: 60px; }
+      100% { width: 100px; }
     }
     
     .categories {
@@ -259,12 +364,31 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+      transition: 0.5s;
+    }
+    
+    .category-btn:hover:before {
+      left: 100%;
     }
     
     .category-btn:hover, .category-btn.active {
       background: var(--primary);
       color: var(--white);
       border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
     }
     
     .products {
@@ -279,17 +403,23 @@
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: var(--transition);
+      position: relative;
     }
     
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
     }
     
     .card-img {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .card:hover .card-img {
+      transform: scale(1.1);
     }
     
     .card-content {
@@ -317,7 +447,7 @@
     
     .btn {
       padding: 0.6rem 1.2rem;
-      border-radius: 12px; /* Slightly more rounded */
+      border-radius: 12px;
       font-weight: 600;
       text-decoration: none;
       transition: var(--transition);
@@ -329,6 +459,23 @@
       text-align: center;
       cursor: pointer;
       border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover:before {
+      left: 100%;
     }
     
     .btn-primary {
@@ -338,6 +485,8 @@
     
     .btn-primary:hover {
       background: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
     }
     
     .btn-outline {
@@ -349,6 +498,7 @@
     .btn-outline:hover {
       background: var(--dark);
       color: var(--white);
+      transform: translateY(-3px);
     }
     
     /* Testimonials */
@@ -368,6 +518,30 @@
       padding: 1.5rem;
       border-radius: 1rem;
       box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .testimonial:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--primary);
+      transform: scaleY(0);
+      transition: var(--transition);
+      transform-origin: top;
+    }
+    
+    .testimonial:hover:before {
+      transform: scaleY(1);
+    }
+    
+    .testimonial:hover {
+      transform: translateY(-5px);
     }
     
     .testimonial-text {
@@ -398,6 +572,11 @@
       height: 50px;
       border-radius: 50%;
       object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .testimonial:hover .testimonial-avatar {
+      transform: scale(1.1);
     }
     
     /* Contact Section */
@@ -417,6 +596,14 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+    
+    .contact-item:hover {
+      transform: translateX(10px);
+      background: rgba(138, 43, 226, 0.05);
     }
     
     .contact-icon {
@@ -429,6 +616,13 @@
       justify-content: center;
       color: var(--primary);
       font-size: 1.2rem;
+      transition: var(--transition);
+    }
+    
+    .contact-item:hover .contact-icon {
+      transform: rotate(15deg) scale(1.1);
+      background: var(--primary);
+      color: var(--white);
     }
     
     .contact-form {
@@ -436,10 +630,17 @@
       padding: 1.5rem;
       border-radius: 1rem;
       box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .contact-form:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     
     .form-group {
       margin-bottom: 1.2rem;
+      position: relative;
     }
     
     .form-group label {
@@ -456,13 +657,15 @@
       border-radius: 8px;
       font-family: inherit;
       font-size: 1rem;
+      transition: var(--transition);
     }
     
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2); /* Updated to pink */
+      box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+      transform: translateY(-2px);
     }
     
     /* Footer */
@@ -496,6 +699,22 @@
       color: rgba(255,255,255,0.8);
       text-decoration: none;
       transition: var(--transition);
+      position: relative;
+    }
+    
+    .footer-col a:before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+    
+    .footer-col a:hover:before {
+      width: 100%;
     }
     
     .footer-col a:hover {
@@ -520,7 +739,7 @@
     
     .social-links a:hover {
       background: var(--primary);
-      transform: translateY(-3px);
+      transform: translateY(-5px) rotate(10deg);
     }
     
     .copyright {
@@ -577,6 +796,12 @@
       cursor: pointer;
       color: var(--gray);
       z-index: 10;
+      transition: var(--transition);
+    }
+    
+    .close-btn:hover {
+      transform: rotate(90deg);
+      color: var(--primary);
     }
     
     /* Image Slider */
@@ -631,6 +856,10 @@
       transform: scale(1.2);
     }
     
+    .slider-dot:hover {
+      background: var(--white);
+    }
+    
     .slider-arrow {
       position: absolute;
       top: 50%;
@@ -651,6 +880,7 @@
     
     .slider-arrow:hover {
       background: var(--white);
+      transform: translateY(-50%) scale(1.1);
     }
     
     .slider-arrow.prev {
@@ -681,6 +911,12 @@
     
     .mobile-nav.active {
       right: 0;
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { right: -100%; }
+      to { right: 0; }
     }
     
     .mobile-nav-header {
@@ -694,6 +930,12 @@
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .close-nav:hover {
+      transform: rotate(90deg);
+      color: var(--primary);
     }
     
     .mobile-nav-links {
@@ -709,11 +951,29 @@
       padding: 0.8rem 1rem;
       border-radius: 8px;
       transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mobile-nav-links a:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+      transition: 0.5s;
+    }
+    
+    .mobile-nav-links a:hover:before {
+      left: 100%;
     }
     
     .mobile-nav-links a:hover {
       background: var(--primary);
       color: var(--white);
+      transform: translateX(5px);
     }
     
     .overlay {
@@ -725,6 +985,12 @@
       background: rgba(0,0,0,0.5);
       z-index: 150;
       display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .overlay.active {
@@ -749,10 +1015,11 @@
       z-index: 90;
       transition: var(--transition);
       text-decoration: none;
+      animation: pulse 2s infinite;
     }
     
     .floating-whatsapp:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) rotate(10deg);
     }
     
     /* Responsive Styles */
@@ -838,8 +1105,8 @@
     <div class="container">
       <div class="nav">
         <div class="logo">
-          <div class="logo-mark">FG</div>
-          <span>Fancy Gifts</span>
+          <div class="logo-mark">DC</div>
+          <span>Dipu's Custom World</span>
         </div>
         
         <button class="menu-toggle" id="menuToggle">
@@ -866,8 +1133,8 @@
   <div class="mobile-nav" id="mobileNav">
     <div class="mobile-nav-header">
       <div class="logo">
-        <div class="logo-mark">FG</div>
-        <span>Fancy Gifts</span>
+        <div class="logo-mark">DC</div>
+        <span>Dipu's Custom World</span>
       </div>
       <button class="close-nav" id="closeNav">
         <i class="fas fa-times"></i>
@@ -1034,7 +1301,7 @@
             </div>
             <div>
               <h3>Email Address</h3>
-              <p>info@fancygifts.com</p>
+              <p>info@dipuscustomworld.com</p>
             </div>
           </div>
           
@@ -1080,7 +1347,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-col">
-          <h3>Fancy Gifts</h3>
+          <h3>Dipu's Custom World</h3>
           <p>Creating memorable handmade gifts with love and care since 2018.</p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1123,7 +1390,7 @@
       </div>
       
       <div class="copyright">
-        <p>© 2025 Fancy Gifts. All rights reserved.</p>
+        <p>© 2025 Dipu's Custom World. All rights reserved.</p>
       </div>
     </div>
   </footer>
